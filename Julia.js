@@ -19,16 +19,30 @@
  var cx;
  var cy;
  var maxIterations;
- var width = 2.5;
- var height = 2.5;
+ var width = 5;
+ var height = 5;
  var xmin = -width/2;
  var xmax = width/2;
  var ymin = -height/2;
  var ymax = height/2
 
+var canvas = document.createElement('canvas');
+canvas.id     = "JuliaCanvas";
+canvas.width  = 600;
+canvas.height = 500;
+canvas.style.border = "1px solid";
+document.body.appendChild(canvas);
+
 
  function JuliaSet() {
-     for (i = 0; i < 100; i++) {
 
+
+     var xold = xmin;
+     var yold = ymin;
+
+     for (i = 0; i < width; i++) {
+        for (j = 0; j < height; j++) {
+
+        }
      }
  }
