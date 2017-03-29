@@ -51,7 +51,7 @@ function JuliaSet() {
             var a = xinit;          // z = a + bi
             var b = yninit;
 
-            for (n = 0; n < maxIterations; n++) {
+            for (n = 0; n < maxIterations; n++) {     // Potential issue with n not returning right number, test or change to while loop
                 var a_sq = a*a;
                 var b_sq = b*b;
                 var two_ab = 2*a*b;
@@ -59,6 +59,7 @@ function JuliaSet() {
                 if (a_sq + b_sq > 4) {
                     break;      // Points must lie within circle of radius 4 to be considered not divergent
                 }
+
 
                 a = a_sq - b_sq + cx;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
                 b = two_ab + cy;
