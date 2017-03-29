@@ -16,16 +16,6 @@
 
  ***************/
 
- var cx;
- var cy;
- var maxIterations;
- var width = 5;
- var height = 5;
- var xmin = -width/2;
- var xmax = width/2;
- var ymin = -height/2;
- var ymax = height/2
-
 var canvas = document.createElement('canvas');
 canvas.id     = "JuliaCanvas";
 canvas.width  = 600;
@@ -33,16 +23,48 @@ canvas.height = 500;
 canvas.style.border = "1px solid";
 document.body.appendChild(canvas);
 
+var width = canvas.width;
+var height = canvas.height;
+var cx;       // c = cx + icy
+var cy;
+var maxIterations;
+var w = 5;
+var h = (w * height) / width;
+var xmin = -w/2;
+var xmax = w/2;
+var ymin = -h/2;
+var ymax = h/2;
 
- function JuliaSet() {
+var xchange = w / width;
+var xchange = h / height;
 
+function JuliaSet() {
 
-     var xold = xmin;
-     var yold = ymin;
+    var yinit = ymin;
 
-     for (i = 0; i < width; i++) {
-        for (j = 0; j < height; j++) {
+    for (i = 0; i < height; i++) {  // Cycle over the y pixels
+
+        var xinit = xmin;              // Reset x after each row is completed
+
+        for (j = 0; j < width; j++) {         // Cycle over the x pixels
+
+            var a = xinit;          // z = a + bi
+            var b = yninit;
+
+            for (n = 0; n < maxIterations; n++) {
+                var a_sq = a*a;
+                var b_sq = b*b;
+                var two_ab = 2*a*b;
+
+                if (a_sq + b_sq > 4) {
+                    break;      // Points must lie within circle of radius 4 to be considered not divergent
+                }
+
+                a = a_sq - b_sq + cx;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
+                b = two_ab + cy;
+
+            }
 
         }
-     }
- }
+    }
+}
