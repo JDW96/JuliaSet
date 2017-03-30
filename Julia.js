@@ -16,23 +16,21 @@
 
  ***************/
 
-
-var cx = map(mouseX, 0, width, 0, 1);       // c = cx + icy
-var cy = map(mouseY, 0, height, 0, 1);        // Hope to add sliders to change this
-
 var minZoom = -1.5;
 var maxZoom = 1.5;
 
 function setup() {
     createCanvas(400,300);
     pixelDensity(1);
-    //colorMode(HSB);
+    colorMode(HSB);
 }
 
 
 function draw() {
 
     var maxIterations = 80;
+    var cx = map(mouseX, 0, width, -1, 1);       // c = cx + icy
+    var cy = map(mouseY, 0, height, -1, 1);        // Hope to add sliders to change this
 
     loadPixels();
 
@@ -60,10 +58,10 @@ function draw() {
             var pix = (i + j * width) * 4;
 
             if (n === maxIterations) {
-                pixels[pix] = 360;  //R or Hue
-                pixels[pix + 1] = 100;  //G or Saturation
+                pixels[pix] = 0;  //R or Hue
+                pixels[pix + 1] = 0;  //G or Saturation
                 pixels[pix + 2] = 0;  //B or Brightness
-                pixels[pix + 3] = 1;     //Alpha
+                pixels[pix + 3] = 0;     //Alpha
             } else {
                 var bright = map(n, 0, maxIterations, 0, 1);
                 bright = map(sqrt(bright), 0, 1, 0, 360);
@@ -73,13 +71,6 @@ function draw() {
                 pixels[pix + 2] = 100;  //B or Brightness
                 pixels[pix + 3] = 255;     //Alpha
             }
-
-            // var pix = (i + j * width) * 4;
-            // pixels[pix] = bright;  //R or Hue
-            // pixels[pix + 1] = bright;  //G or Saturation
-            // pixels[pix + 2] = bright;  //B or Brightness
-            // pixels[pix + 3] = 255;     //Alpha
-
 
         }
 
