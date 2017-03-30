@@ -17,8 +17,8 @@
  ***************/
 
 
-//var cx = -0.4;       // c = cx + icy
-//var cy = 0.6;        // Hope to add sliders to change this
+var cx = -0.4;       // c = cx + icy
+var cy = 0.6;        // Hope to add sliders to change this
 
 function setup() {
     createCanvas(200,200);
@@ -30,7 +30,7 @@ function setup() {
 
 function draw() {
 
-    //var maxIterations = 100;
+    var maxIterations = 100;
 
 
     loadPixels();
@@ -38,23 +38,23 @@ function draw() {
     for (var i = 0; i < width; i++) {  // Cycle over the y pixels
         for (var j = 0; j < height; j++) {         // Cycle over the x pixels
 
-            //var a = map(i, 0, width, -2, 2);          // z = a + bi
-            //var b = map(j, 0, height, -2, 2);
-            //var n = 0;
+            var a = map(i, 0, width, -2, 2);          // z = a + bi
+            var b = map(j, 0, height, -2, 2);
+            var n = 0;
 
-            // while (n < maxIterations) {     // Potential issue with n not returning right number, test or change to while loop
-            //     var a_sq = a * a;
-            //     var b_sq = b * b;
-            //     var two_ab = 2 * a * b;
-            //
-            //     if (a_sq + b_sq > 4) {
-            //         break;      // Points must lie within circle of radius 4 to be considered not divergent
-            //     }
-            //
-            //     a = a_sq - b_sq + cx;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
-            //     b = two_ab + cy;
-            //     n++
-            // }
+            while (n < maxIterations) {     // Potential issue with n not returning right number, test or change to while loop
+                var a_sq = a * a;
+                var b_sq = b * b;
+                var two_ab = 2 * a * b;
+
+                if (a_sq + b_sq > 4) {
+                    break;      // Points must lie within circle of radius 4 to be considered not divergent
+                }
+
+                a = a_sq - b_sq + cx;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
+                b = two_ab + cy;
+                n++
+            }
 
             var pix = (i + j * width) * 4;
             pixels[pix + 0] = 51;
@@ -62,12 +62,12 @@ function draw() {
             pixels[pix + 2] = 51;
             pixels[pix + 3] = 255;
 
-            // if (n === maxIterations) {
-            //     pixels[i+j*width] = color(0);
-            // } else {
-            //     var hu = sqrt(n / maxiterations);
-            //     pixels[i+j*width] = color(hu, 255, 150);
-            // }
+            if (n === maxIterations) {
+                pixels[i+j*width] = color(0);
+            } else {
+                var hu = sqrt(n / maxIterations);
+                pixels[i+j*width] = color(hu, 255, 150);
+            }
 
 
         }
