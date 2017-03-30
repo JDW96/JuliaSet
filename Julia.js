@@ -20,26 +20,27 @@
 var cx = -0.8;       // c = cx + icy
 var cy = 0.156;        // Hope to add sliders to change this
 
-function setup() {
-    createCanvas(200,200);
-    pixelDensity(1);
-    //colorMode(HSB, 1);
+var minZoom = -1.5;
+var maxZoom = 1.5;
 
+function setup() {
+    createCanvas(400,300);
+    pixelDensity(1);
+    //colorMode(HSB);
 }
 
 
 function draw() {
 
-    var maxIterations = 500;
-
+    var maxIterations = 300;
 
     loadPixels();
 
     for (var i = 0; i < width; i++) {  // Cycle over the y pixels
         for (var j = 0; j < height; j++) {         // Cycle over the x pixels
 
-            var a = map(i, 0, width, -2, 2);          // z = a + bi
-            var b = map(j, 0, height, -2, 2);
+            var a = map(i, 0, width, minZoom, maxZoom);          // z = a + bi
+            var b = map(j, 0, height, minZoom, maxZoom);
             var n = 0;
 
             while (n < maxIterations) {     // Potential issue with n not returning right number, test or change to while loop
@@ -57,35 +58,32 @@ function draw() {
             }
 
             var pix = (i + j * width) * 4;
-            pixels[pix + 0] = 51;
-            pixels[pix + 1] = 51;
-            pixels[pix + 2] = 51;
-            pixels[pix + 3] = 255;
 
-            // if (n === maxIterations) {
-            //     pixels[i+j*width] = color(0);
-            // } else {
-            //     var hu = sqrt(n / maxIterations);
-            //     pixels[i+j*width] = color(hu, 255, 150);
-            // }
+            if (n === maxIterations) {
+                pixels[pix] = 0//360;  //R or Hue
+                pixels[pix + 1] = 0//100;  //G or Saturation
+                pixels[pix + 2] = 0//0;  //B or Brightness
+                pixels[pix + 3] = 1;     //Alpha
+            } else {
+                var bright = map(n, 0, maxIterations, 0, 1);
+                bright = map(sqrt(bright), 0, 1, 0, 255//360);
 
-            var bright = map(n, 0, maxIterations, 0, 1);
-            bright = map(sqrt(bright), 0, 1, 0, 255);
-
-            if (n == maxIterations) {
-                bright = 0;
+                pixels[pix] = bright;  //R or Hue
+                pixels[pix + 1] = bright//100;  //G or Saturation
+                pixels[pix + 2] = bright//100;  //B or Brightness
+                pixels[pix + 3] = 1;     //Alpha
             }
 
-            var pix = (i + j * width) * 4;
-            pixels[pix + 0] = bright;
-            pixels[pix + 1] = bright;
-            pixels[pix + 2] = bright;
-            pixels[pix + 3] = 255;
+            // var pix = (i + j * width) * 4;
+            // pixels[pix] = bright;  //R or Hue
+            // pixels[pix + 1] = bright;  //G or Saturation
+            // pixels[pix + 2] = bright;  //B or Brightness
+            // pixels[pix + 3] = 255;     //Alpha
 
 
         }
 
     }
     updatePixels();
-
 }
+
