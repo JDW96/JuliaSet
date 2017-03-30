@@ -16,17 +16,13 @@
 
  ***************/
 
-var canvas = document.createElement('canvas');
-canvas.id     = "JuliaCanvas";
-canvas.width  = 600;
-canvas.height = 500;
-canvas.style.border = "1px solid";
-document.body.appendChild(canvas);
+function setup() {
+    createCanvas(500,400);
+    pixelDensity(1);
+}
 
-var width = canvas.width;
-var height = canvas.height;
-var cx;       // c = cx + icy
-var cy;
+var cx = -0.4;       // c = cx + icy
+var cy = 0.6;        // Hope to add sliders to change this
 var maxIterations;
 var w = 5;
 var h = (w * height) / width;
@@ -36,11 +32,13 @@ var ymin = -h/2;
 var ymax = h/2;
 
 var xchange = w / width;
-var xchange = h / height;
+var ychange = h / height;
 
-function JuliaSet() {
+
+function draw() {
 
     var yinit = ymin;
+    loadPixels();
 
     for (i = 0; i < height; i++) {  // Cycle over the y pixels
 
@@ -68,4 +66,5 @@ function JuliaSet() {
 
         }
     }
+    updatePixels();
 }
