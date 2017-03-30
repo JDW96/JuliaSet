@@ -17,8 +17,8 @@
  ***************/
 
 
-var cx = -0.8;       // c = cx + icy
-var cy = 0.156;        // Hope to add sliders to change this
+var cx = map(mouseX, 0, width, 0, 1);       // c = cx + icy
+var cy = map(mouseY, 0, height, 0, 1);        // Hope to add sliders to change this
 
 var minZoom = -1.5;
 var maxZoom = 1.5;
@@ -32,7 +32,7 @@ function setup() {
 
 function draw() {
 
-    var maxIterations = 300;
+    var maxIterations = 80;
 
     loadPixels();
 
@@ -60,18 +60,18 @@ function draw() {
             var pix = (i + j * width) * 4;
 
             if (n === maxIterations) {
-                pixels[pix] = 0//360;  //R or Hue
-                pixels[pix + 1] = 0//100;  //G or Saturation
-                pixels[pix + 2] = 0//0;  //B or Brightness
+                pixels[pix] = 360;  //R or Hue
+                pixels[pix + 1] = 100;  //G or Saturation
+                pixels[pix + 2] = 0;  //B or Brightness
                 pixels[pix + 3] = 1;     //Alpha
             } else {
                 var bright = map(n, 0, maxIterations, 0, 1);
-                bright = map(sqrt(bright), 0, 1, 0, 255//360);
+                bright = map(sqrt(bright), 0, 1, 0, 360);
 
                 pixels[pix] = bright;  //R or Hue
-                pixels[pix + 1] = bright//100;  //G or Saturation
-                pixels[pix + 2] = bright//100;  //B or Brightness
-                pixels[pix + 3] = 1;     //Alpha
+                pixels[pix + 1] = 100;  //G or Saturation
+                pixels[pix + 2] = 100;  //B or Brightness
+                pixels[pix + 3] = 255;     //Alpha
             }
 
             // var pix = (i + j * width) * 4;
