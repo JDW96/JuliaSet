@@ -77,7 +77,7 @@ function draw() {
             if (ColourMode.checked()) {
                 if (n === maxIter) {  // Set to white
                     pixels[pix + 3] = 0;     //Alpha
-                } else {
+                } else {                                      // Simple colour mode needs much fewer calculations
                     var Bright = map(n, 0, maxIter, 0, 1);
                     Bright = map(sqrt(Bright), 0, 1, 0, 255);
 
@@ -87,19 +87,19 @@ function draw() {
                     pixels[pix + 3] = 255;     //Alpha
                 }
             } else {
-                if (n === maxIter) {  // Set to white
+                if (n === maxIter) {  // Set to black (very dark grey, too black looks ugly)
                     pixels[pix] = 0;  //R
                     pixels[pix + 1] = 0;  //G
                     pixels[pix + 2] = 0;  //B
                     pixels[pix + 3] = 220;     //Alpha
                 } else {
-                    var Hue = map(sqrt(n/maxIter), 0, 1, 0, 360);
+                    var Hue = map(sqrt(n/maxIter), 0, 1, 0, 360);     // Use HSB colour values as it can cycle through all colours using only 1 variable
 
                     var col = color(Hue, 78, 100);
 
-                    pixels[pix] = red(col);  //R or Hue
-                    pixels[pix + 1] = blue(col);  //G or Saturation
-                    pixels[pix + 2] = green(col);  //B or Brightness
+                    pixels[pix] = red(col);  //R
+                    pixels[pix + 1] = blue(col);  //G
+                    pixels[pix + 2] = green(col);  //B
                     pixels[pix + 3] = 255;     //Alpha
                 }
             }
