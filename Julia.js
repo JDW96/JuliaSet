@@ -22,16 +22,19 @@ var maxZoom = 1.5;
 function setup() {
     createCanvas(450,350);
     pixelDensity(1);
-    colorMode(HSB, 100);
+    colorMode(HSB);
     noCursor();
+
+    var Mandelbrot = createCheckbox("Show Mandelbrot set?");
 }
 
 
 function draw() {
 
-    var maxIterations = 120;
+    var maxIterations = 50;
+
     var cx = map(mouseX, 0, width, -1, 1);       // c = cx + icy
-    var cy = map(mouseY, 0, height, -1, 1);        // Hope to add sliders to change this
+    var cy = map(mouseY, 0, height, -1, 1);        // Uses mouse position
 
     loadPixels();
 
@@ -56,20 +59,21 @@ function draw() {
                 n++
             }
 
-            var pix = (i + j * width) * 4;
+            var pix = (i + j * width) * 4;   // Access a pixel at position i, j on the screen
 
-            if (n === maxIterations) {
-                pixels[pix] = 0;  //R or Hue
-                pixels[pix + 1] = 0;  //G or Saturation
-                pixels[pix + 2] = 0;  //B or Brightness
-                pixels[pix + 3] = 0;     //Alpha
+            if (n === maxIterations) {  // Set to white
+                pixels[pix] = 0;  //R
+                pixels[pix + 1] = 0;  //G
+                pixels[pix + 2] = 0;  //B
+                pixels[pix + 3] = 220;     //Alpha
             } else {
-                var bright = map(n, 0, maxIterations, 0, 1);
-                bright = map(sqrt(bright), 0, 1, 0, 360);
+                var Hue = map(sqrt(n/maxIterations), 0, 1, 0, 360);
 
-                pixels[pix] = bright;  //R or Hue
-                pixels[pix + 1] = 100;  //G or Saturation
-                pixels[pix + 2] = 100;  //B or Brightness
+                col = color(Hue, 78, 100);
+
+                pixels[pix] = red(col);  //R or Hue
+                pixels[pix + 1] = blue(col);  //G or Saturation
+                pixels[pix + 2] = green(col);  //B or Brightness
                 pixels[pix + 3] = 255;     //Alpha
             }
 
