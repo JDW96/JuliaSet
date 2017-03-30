@@ -25,7 +25,7 @@ function setup() {
     colorMode(HSB);
     noCursor();
 
-    var Mandelbrot = createCheckbox("Show Mandelbrot set?");
+    Mandelbrot = createCheckbox("Show Mandelbrot set?");
 }
 
 
@@ -45,6 +45,11 @@ function draw() {
             var b = map(j, 0, height, minZoom, maxZoom);
             var n = 0;
 
+            if (Mandelbrot.checked()) {
+                aold = a;
+                bold = b;
+            }
+
             while (n < maxIterations) {     // Potential issue with n not returning right number, test or change to while loop
                 var a_sq = a * a;
                 var b_sq = b * b;
@@ -54,8 +59,14 @@ function draw() {
                     break;      // Points must lie within circle of radius 4 to be considered not divergent
                 }
 
-                a = a_sq - b_sq + cx;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
-                b = two_ab + cy;
+                if (Mandelbrot.checked()) {
+                    a = a_sq - b_sq + aold;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
+                    b = two_ab + bold;
+                } else {
+                    a = a_sq - b_sq + cx;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
+                    b = two_ab + cy;
+                }
+
                 n++
             }
 
