@@ -5,6 +5,7 @@
     <title>Julia Set Visualisation</title>
     <link rel="stylesheet" type="text/css" href="Style.css">
     <script src="p5/p5.js"></script>
+    <script src="p5/addons/p5.dom.js"></script>
     <script src="Julia.js"></script>
     <script src="Test.js"></script>
 </head>
@@ -12,10 +13,11 @@
     <h1>Julia Set Visualisation</h1>
     <p>The Julia Set can be used to show beautiful fractal patterns if used correctly.</p>
     <p>
-        Essentially what is happening is thatthe canvas represents the complex plane and for each pixel on the canvas,
+        Essentially what is happening is that the canvas represents the complex plane and for each pixel on the canvas,
         the location is iterated using the equation f(z) = z<sup>2</sup> + c for some constant c.
         This is iterated until the result lies outside a circle of radius 2 centered at the origin. For
         each pixel, the number of iterations taken is found and the pixel colour is changed accordingly.
     </p>
 </body>
 </html>
+

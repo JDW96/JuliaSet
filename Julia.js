@@ -16,55 +16,106 @@
 
  ***************/
 
+
+//var cx = -0.4;       // c = cx + icy
+//var cy = 0.6;        // Hope to add sliders to change this
+
 function setup() {
-    createCanvas(500,400);
+    createCanvas(200,200);
     pixelDensity(1);
+    //colorMode(HSB, 1);
+
+
+    loadPixels();
+
+    for (var i = 0; i < width; i++) {  // Cycle over the y pixels
+        for (var j = 0; j < height; j++) {         // Cycle over the x pixels
+
+            //var a = map(i, 0, width, -2, 2);          // z = a + bi
+            //var b = map(j, 0, height, -2, 2);
+            //var n = 0;
+
+            // while (n < maxIterations) {     // Potential issue with n not returning right number, test or change to while loop
+            //     var a_sq = a * a;
+            //     var b_sq = b * b;
+            //     var two_ab = 2 * a * b;
+            //
+            //     if (a_sq + b_sq > 4) {
+            //         break;      // Points must lie within circle of radius 4 to be considered not divergent
+            //     }
+            //
+            //     a = a_sq - b_sq + cx;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
+            //     b = two_ab + cy;
+            //     n++
+            // }
+
+            var pix = (x + y * width) * 4;
+            pixels[pix + 0] = 51;
+            pixels[pix + 1] = 51;
+            pixels[pix + 2] = 51;
+            pixels[pix + 3] = 255;
+
+            // if (n === maxIterations) {
+            //     pixels[i+j*width] = color(0);
+            // } else {
+            //     var hu = sqrt(n / maxiterations);
+            //     pixels[i+j*width] = color(hu, 255, 150);
+            // }
+
+
+        }
+
+    }
+    updatePixels();
+
 }
-
-var cx = -0.4;       // c = cx + icy
-var cy = 0.6;        // Hope to add sliders to change this
-var maxIterations;
-var w = 5;
-var h = (w * height) / width;
-var xmin = -w/2;
-var xmax = w/2;
-var ymin = -h/2;
-var ymax = h/2;
-
-var xchange = w / width;
-var ychange = h / height;
 
 
 function draw() {
 
-    var yinit = ymin;
+    //var maxIterations = 100;
+
+
     loadPixels();
 
-    for (i = 0; i < height; i++) {  // Cycle over the y pixels
+    for (var i = 0; i < width; i++) {  // Cycle over the y pixels
+        for (var j = 0; j < height; j++) {         // Cycle over the x pixels
 
-        var xinit = xmin;              // Reset x after each row is completed
+            //var a = map(i, 0, width, -2, 2);          // z = a + bi
+            //var b = map(j, 0, height, -2, 2);
+            //var n = 0;
 
-        for (j = 0; j < width; j++) {         // Cycle over the x pixels
+            // while (n < maxIterations) {     // Potential issue with n not returning right number, test or change to while loop
+            //     var a_sq = a * a;
+            //     var b_sq = b * b;
+            //     var two_ab = 2 * a * b;
+            //
+            //     if (a_sq + b_sq > 4) {
+            //         break;      // Points must lie within circle of radius 4 to be considered not divergent
+            //     }
+            //
+            //     a = a_sq - b_sq + cx;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
+            //     b = two_ab + cy;
+            //     n++
+            // }
 
-            var a = xinit;          // z = a + bi
-            var b = yninit;
+            var pix = (x + y * width) * 4;
+            pixels[pix + 0] = 51;
+            pixels[pix + 1] = 51;
+            pixels[pix + 2] = 51;
+            pixels[pix + 3] = 255;
 
-            for (n = 0; n < maxIterations; n++) {     // Potential issue with n not returning right number, test or change to while loop
-                var a_sq = a*a;
-                var b_sq = b*b;
-                var two_ab = 2*a*b;
+            // if (n === maxIterations) {
+            //     pixels[i+j*width] = color(0);
+            // } else {
+            //     var hu = sqrt(n / maxiterations);
+            //     pixels[i+j*width] = color(hu, 255, 150);
+            // }
 
-                if (a_sq + b_sq > 4) {
-                    break;      // Points must lie within circle of radius 4 to be considered not divergent
-                }
-
-
-                a = a_sq - b_sq + cx;     // z^2 = a^2 - b^2 + 2abi, f(z) = z^2 + c
-                b = two_ab + cy;
-
-            }
 
         }
+
     }
     updatePixels();
+
 }
