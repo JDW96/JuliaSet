@@ -16,23 +16,24 @@
 
  ***************/
 
-var minZoom = -1.5;
+var minZoom = -1.5;    // Can be changed to move the 'camera' position but implementing a way to change dynamically causes performance issues
 var maxZoom = 1.5;
 
 function setup() {
-    createCanvas(450,350);
+    createCanvas(400,300);   // A smaller canvas produces much better performance as the number of pixels is lower
     pixelDensity(1);
-    colorMode(HSB);
+    colorMode(HSB);        // Makes converting from HSB to RGB simpler
     noCursor();
 
-    Mandelbrot = createCheckbox("Show Mandelbrot set?");
+    Mandelbrot = createCheckbox("Show Mandelbrot set");
     ColourMode = createCheckbox("Simple colour mode");
+    maxIterations = createSlider(10, 200, 70, 1);
 }
 
 
 function draw() {
 
-    var maxIterations = 50;
+    var maxIter = maxIterations.value();
 
     var cx = map(mouseX, 0, width, -1, 1);       // c = cx + icy
     var cy = map(mouseY, 0, height, -1, 1);        // Uses mouse position
@@ -51,7 +52,7 @@ function draw() {
                 bold = b;
             }
 
-            while (n < maxIterations) {     // Potential issue with n not returning right number, test or change to while loop
+            while (n < maxIter) {     // Potential issue with n not returning right number, test or change to while loop
                 var a_sq = a * a;
                 var b_sq = b * b;
                 var two_ab = 2 * a * b;
@@ -74,10 +75,10 @@ function draw() {
             var pix = (i + j * width) * 4;   // Access a pixel at position i, j on the screen
 
             if (ColourMode.checked()) {
-                if (n === maxIterations) {  // Set to white
+                if (n === maxIter) {  // Set to white
                     pixels[pix + 3] = 0;     //Alpha
                 } else {
-                    var Bright = map(n, 0, maxIterations, 0, 1);
+                    var Bright = map(n, 0, maxIter, 0, 1);
                     Bright = map(sqrt(Bright), 0, 1, 0, 255);
 
                     pixels[pix] = Bright;  //R or Hue
@@ -86,15 +87,15 @@ function draw() {
                     pixels[pix + 3] = 255;     //Alpha
                 }
             } else {
-                if (n === maxIterations) {  // Set to white
+                if (n === maxIter) {  // Set to white
                     pixels[pix] = 0;  //R
                     pixels[pix + 1] = 0;  //G
                     pixels[pix + 2] = 0;  //B
                     pixels[pix + 3] = 220;     //Alpha
                 } else {
-                    var Hue = map(sqrt(n/maxIterations), 0, 1, 0, 360);
+                    var Hue = map(sqrt(n/maxIter), 0, 1, 0, 360);
 
-                    col = color(Hue, 78, 100);
+                    var col = color(Hue, 78, 100);
 
                     pixels[pix] = red(col);  //R or Hue
                     pixels[pix + 1] = blue(col);  //G or Saturation
