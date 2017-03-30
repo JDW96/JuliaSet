@@ -17,20 +17,20 @@
  ***************/
 
 
-var cx = -0.4;       // c = cx + icy
-var cy = 0.6;        // Hope to add sliders to change this
+var cx = -0.8;       // c = cx + icy
+var cy = 0.156;        // Hope to add sliders to change this
 
 function setup() {
     createCanvas(200,200);
     pixelDensity(1);
-    colorMode(HSB, 1);
+    //colorMode(HSB, 1);
 
 }
 
 
 function draw() {
 
-    var maxIterations = 100;
+    var maxIterations = 500;
 
 
     loadPixels();
@@ -62,12 +62,25 @@ function draw() {
             pixels[pix + 2] = 51;
             pixels[pix + 3] = 255;
 
-            if (n === maxIterations) {
-                pixels[i+j*width] = color(0);
-            } else {
-                var hu = sqrt(n / maxIterations);
-                pixels[i+j*width] = color(hu, 255, 150);
+            // if (n === maxIterations) {
+            //     pixels[i+j*width] = color(0);
+            // } else {
+            //     var hu = sqrt(n / maxIterations);
+            //     pixels[i+j*width] = color(hu, 255, 150);
+            // }
+
+            var bright = map(n, 0, maxIterations, 0, 1);
+            bright = map(sqrt(bright), 0, 1, 0, 255);
+
+            if (n == maxIterations) {
+                bright = 0;
             }
+
+            var pix = (i + j * width) * 4;
+            pixels[pix + 0] = bright;
+            pixels[pix + 1] = bright;
+            pixels[pix + 2] = bright;
+            pixels[pix + 3] = 255;
 
 
         }
