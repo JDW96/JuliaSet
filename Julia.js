@@ -20,15 +20,16 @@ var minZoom = -1.5;
 var maxZoom = 1.5;
 
 function setup() {
-    createCanvas(400,300);
+    createCanvas(450,350);
     pixelDensity(1);
-    colorMode(HSB);
+    colorMode(HSB, 100);
+    noCursor();
 }
 
 
 function draw() {
 
-    var maxIterations = 80;
+    var maxIterations = 120;
     var cx = map(mouseX, 0, width, -1, 1);       // c = cx + icy
     var cy = map(mouseY, 0, height, -1, 1);        // Hope to add sliders to change this
 
